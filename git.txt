@@ -1,0 +1,6 @@
+echo "# mgicode-k8s-shell" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/mgicode/mgicode-k8s-shell.git
+git push -u origin master
