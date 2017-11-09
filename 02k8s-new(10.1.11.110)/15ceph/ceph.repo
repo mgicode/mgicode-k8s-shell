@@ -1,0 +1,39 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+#这个可以不用
+cat >/etc/yum.repos.d/ceph.repo <<EOF
+[Ceph]
+name=Ceph packages for $basearch
+#baseurl=http://download.ceph.com/rpm-jewel/el7/$basearch
+baseurl=http://cn.ceph.com/rpm-firefly/el7/$basearch
+enabled=1
+gpgcheck=1
+type=rpm-md
+gpgkey=http://cn.ceph.com/keys/release.asc
+#gpgkey=https://download.ceph.com/keys/release.asc
+priority=1
+
+[Ceph-noarch]
+name=Ceph noarch packages
+#baseurl=http://download.ceph.com/rpm-jewel/el7/noarch
+baseurl=http://cn.ceph.com/rpm-firefly/el7/noarch
+enabled=1
+gpgcheck=1
+type=rpm-md
+#gpgkey=https://download.ceph.com/keys/release.asc
+gpgkey=http://cn.ceph.com/keys/release.asc
+priority=1
+
+[ceph-source]
+name=Ceph source packages
+#baseurl=http://download.ceph.com/rpm-jewel/el7/SRPMS
+baseurl=http://cn.ceph.com/rpm-firefly/el7/SRPMS
+enabled=1
+gpgcheck=1
+type=rpm-md
+#gpgkey=https://download.ceph.com/keys/release.asc
+gpgkey=http://cn.ceph.com/keys/release.asc
+priority=1
+EOF

@@ -1,0 +1,27 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ssh-controller
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: ssh-controller
+      labels:
+        app: ssh-controller
+    spec:
+      hostNetwork: true
+      nodeSelector:
+         zone: haproxy
+      containers:
+      - name: ssh-controller
+        imagePullPolicy: Always
+        image: 10.1.11.60:5000/centos7_ssh       
+        ports:       
+        - containerPort: 22
+          hostPort: 22  
+ 

@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-kibana-ingress
+  namespace: kube-system
+  #annotations:
+    #kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: dashboard.jxgs.me
+    http:
+      paths:
+      - backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
+  - host: kibana.jxgs.me
+    http:
+      paths:
+      - backend:
+          serviceName: kibana-logging
+          servicePort: 5601

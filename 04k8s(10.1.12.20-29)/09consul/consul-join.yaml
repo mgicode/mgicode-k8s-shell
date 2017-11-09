@@ -1,0 +1,32 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: consul-join
+spec:
+  template:
+    metadata:
+      name: consul-join
+    spec:
+      hostNetwork: true
+      #nodeSelector:
+        #zone: sys
+      containers:
+        - name: consul
+          image: 10.1.12.61:5000/consul:0.9.1
+          command:
+            - "/bin/consul"
+            - "join"
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          args:
+            - "-http-addr=10.1.12.27:8500"
+            - "10.1.12.28"
+            - "10.1.12.29"
+      restartPolicy: Never

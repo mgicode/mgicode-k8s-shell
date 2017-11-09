@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongos-svc
+  labels:
+    name: mongos-svc
+spec:
+  type: NodePort 
+  ports:
+  - port: 27017
+    targetPort: 27017
+    protocol: TCP
+  selector:
+    app: mongo-os
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongos-os
+  labels:
+    name: mongos-os
+spec:
+  clusterIP: None
+  ports:
+  - port: 27017
+    targetPort: 27017
+    protocol: TCP
+  selector:
+    app: mongo-os
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-os-config
+data:
+  entrypoint.sh: |+
+    #!/bin/bash     
+    set +e                    
+    SERVICE=`/var/run/kubectl describe service/mongo-config | grep 27019 | grep -i endpoints | awk '{print $2}'` 
+    echo "Config SERVICEIP:$SERVICE "
+    mongos --configdb "configReplSet/$SERVICE" &
+
+    sleep 30
+    #todo:能动态加入多个shard,不同的shard不同的服务名，通过服务名片断取得如rs0这样的shard名
+    #sh.addShard(\"rs0/172.30.101.3:27018,172.30.26.3:27018,172.30.76.2:27018")
+    SERVICE1=`/var/run/kubectl describe service/mongo-shards | grep 27018 | grep -i endpoints | awk '{print $2}'` 
+    echo "shard SERVICEIP:$SERVICE1 "
+    content=" sh.addShard(\"rs0/$SERVICE1\") "       
+    echo $content
+    echo $content > osaddshard_init.js        
+    mongo --host 127.0.0.1 --port 27017 < ./osaddshard_init.js
+
+    wait
+
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: mongo-os
+spec:
+  serviceName: mongos-os
+  replicas: 2
+  template: 
+    metadata:
+      name: mongo-os
+      labels:
+        app: mongo-os
+    spec:
+      containers:
+      - name: mongo-os
+        imagePullPolicy: Always
+        image: 10.1.11.60:5000/mongo:3.4.4
+        command:
+          - bash
+          - "-c"
+          - |
+            set -e   
+            chmod 777 /conf/entrypoint.sh 
+            /conf/entrypoint.sh        
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /data/db
+        - name: conf
+          mountPath: /conf
+          readOnly: false
+        - name: podinfo
+          mountPath: /etc/podinfo
+          readOnly: false
+      volumes:
+      - name: mysql-persistent-storage
+        emptyDir: {}
+      - name: conf
+        configMap:
+          name: mongo-os-config
+          items: 
+          - key: entrypoint.sh  
+            path: entrypoint.sh
+      - name: podinfo
+        downwardAPI:
+          items:
+            - path: "labels"
+              fieldRef:
+                fieldPath: metadata.labels
+            - path: "annotations"
+              fieldRef:
+                fieldPath: metadata.annotations
+            - path: "pod_name"
+              fieldRef:
+                fieldPath: metadata.name
+            - path: "pod_namespace"
+              fieldRef:
+                fieldPath: metadata.namespace
+
+

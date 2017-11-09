@@ -1,0 +1,16 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test
+  annotations:
+    volume.beta.kubernetes.io/storage-class: ceph-rbd-sc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

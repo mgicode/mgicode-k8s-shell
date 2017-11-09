@@ -1,0 +1,17 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: myjdk-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      app: myjdk-pv

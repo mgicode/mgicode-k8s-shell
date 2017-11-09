@@ -1,0 +1,27 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+
+#创建ceph-storageClass.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata: 
+  name: ceph-rbd-sc
+provisioner: kubernetes.io/rbd
+parameters: 
+  #monitors: 10.1.12.2:6789,10.1.12.3:6789,10.1.12.4:6789
+  monitors: 10.1.11.201:6789
+  adminId: admin
+  adminSecretName: ceph-secret-key
+  pool: rbd
+  userId: admin
+  userSecretName: ceph-secret-key
+# 说明：
+# monitors: Ceph Monitor的地址，可以用逗号分割
+# adminId： Ceph客户端用于创建块设备的用户；
+# adminSecretNamespace：admin的namespaces ，不设置，使用默认default
+# adminSecret：admin的SecretID
+# pool： RBD的pool存储池
+# userId: 用于块设备映射的用户ID，默认可以和admin一致
+# userSecretName： Ceph-Secret的ID

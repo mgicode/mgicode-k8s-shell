@@ -1,0 +1,23 @@
+# author:pengrk
+# email:546711211@qq.com
+# qq group:573283836
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ceph-busybox1
+spec:
+  nodeSelector:
+    zone: msc
+  containers:
+  - name: ceph-busybox
+    image: busybox
+    command: ["sleep", "600000"]
+    volumeMounts:
+    - name: ceph-vol1
+      mountPath: /usr/share/busybox
+      readOnly: false
+  volumes:
+  - name: ceph-vol1
+    persistentVolumeClaim:
+      claimName: myjdk-claim
