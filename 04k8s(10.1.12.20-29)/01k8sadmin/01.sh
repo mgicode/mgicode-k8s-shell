@@ -32,6 +32,7 @@ yum install traceroute -y
 yum install mtr -y
 
 
+
 hostnamectl set-hostname k8sadmin
 systemctl restart systemd-hostnamed
 systemctl stop firewalld.service
