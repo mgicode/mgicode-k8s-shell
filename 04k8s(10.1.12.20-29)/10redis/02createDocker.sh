@@ -10,6 +10,6 @@ docker push 10.1.12.61:5000/redis:4.0.2
 
 docker run  --name redis    -p 6379:6379  -d 10.1.12.61:5000/redis:4.0.2
 docker exec -it redis /bin/bash
-docker exec -it mongredisdb  sh
+docker exec -it redis  sh
 
 #CONFIG SET protected-mode no
