@@ -13,11 +13,7 @@ export BOOTSTRAP_TOKEN="$BOOTSTRAP_TOKEN"
 EOF
 
 cat  /etc/profile
-
-
 cp /etc/profile2 /etc/profile 
-
-
 cp /etc/profile /etc/profile1
 
 

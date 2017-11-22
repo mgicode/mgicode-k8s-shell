@@ -1,0 +1,73 @@
+My Linux system (Ubuntu 12.10) was suddenly having problems with IPv6, and dmesg said:
+
+IPv6: wlan0: IPv6 duplicate address 2a00:cd8:blabla:1af4:6aff:fe9c:ced4 detected!
+IPv6: ipv6_create_tempaddr: regeneration time exceeded - disabled temporary address support 
+
+The workaround was to disable Duplicate Address Detection (DAD) for the IPv6 privacy extensions on my Wifi interface wlan0:
+
+sudo sysctl net.ipv6.conf.wlan0.accept_dad=0
+
+Please note: if you use wired ethernet eth0, you should do something like this:
+
+sudo sysctl net.ipv6.conf.eth0.accept_dad=0
+
+It is unclear to me where the problem is: in Linux itself , or in my modem, or in the interaction between Linux and my modem.
+The problem also occurs in OpenSuSE 12.2 on the same LAN, so it's not a Ubuntu-only problem.
+
+Bug report is here: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1120617
+
+Update: it seems to be related to Wifi; it does not happen with wired ethernet.
+
+sysctl net.ipv6.conf.ens160.accept_dad=0
+
+
+
+
+
+
+
+
+
+Nov 15 19:48:53 balance02 systemd: Startup finished in 461ms (kernel) + 1.061s (initrd) + 2.544s (userspace) = 4.067s.
+Nov 15 19:48:53 balance02 kernel: IPv6: ens160: IPv6 duplicate address fe80::9df1:f8b1:b084:9ed5 detected!
+Nov 15 19:48:53 balance02 NetworkManager[632]: <info>  [1510746533.2600] device (ens160): ipv6: duplicate address check failed for the fe80::9df1:f8b1:b084:9ed5/64 lft forever pref forever lifetime 3-0[4294967295,4294967295] dev 2 flags tentative,permanent,0x8 src kernel address
+Nov 15 19:48:53 balance02 NetworkManager[632]: <info>  [1510746533.5690] device (ens160): ipv6: duplicate address check failed for the fe80::509a:61d8:c46a:2274/64 lft forever pref forever lifetime 3-0[4294967295,4294967295] dev 2 flags tentative,permanent,0x8 src kernel address
+Nov 15 19:48:53 balance02 NetworkManager[632]: <warn>  [1510746533.5690] device (ens160): linklocal6: failed to generate an address: Too many DAD collisions
+Nov 15 19:48:53 balance02 kernel: IPv6: ens160: IPv6 duplicate address fe80::509a:61d8:c46a:2274 detected!
+
+
+
+
+Two gateway machines, use keepalive.
+
+The IPv6 address display:
+
+inet6 x:x:x:x::1/64 scope global tentative dadfailed
+and can't ping6 this address.
+
+The reason is when another master machine is down, but the ipv6 address is not delete, and the new master machine can't use this address.
+
+To prevent this:
+
+$ sysctl -a | grep accept_dad
+net.ipv6.conf.all.accept_dad = 0
+net.ipv6.conf.default.accept_dad = 0
+net.ipv6.conf.eth0.accept_dad = 0
+net.ipv6.conf.eth1.accept_dad = 0
+net.ipv6.conf.lo.accept_dad = -1
+net.ipv6.conf.tun0.accept_dad = -1
+net.ipv6.conf.tun1.accept_dad = -1
+
+# Than change the physic netcard's value to 0
+$ sysctl -w net.ipv6.conf.eth0.accept_dad=0
+$ sysctl -w net.ipv6.conf.eth1.accept_dad=0
+
+# Than delete the keepalive vip and create it
+The meaning of accept_dad:
+
+accept_dad - INTEGER
+    Whether to accept DAD (Duplicate Address Detection).
+        0: Disable DAD
+        1: Enable DAD (default)
+        2: Enable DAD, and disable IPv6 operation if MAC-based duplicate
+            link-local address has been found.

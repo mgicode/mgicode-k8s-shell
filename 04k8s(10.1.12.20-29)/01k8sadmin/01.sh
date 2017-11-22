@@ -101,13 +101,16 @@ EOF
  mkdir -p /etc/docker/
  cat > /etc/docker/daemon.json << EOF
 {
-  "registry-mirrors": ["http://2f02dbc7.m.daocloud.io", "https://docker.mirrors.ustc.edu.cn", "hub-mirror.c.163.com"],
+  "registry-mirrors": ["https://ap1xf0lr.mirror.aliyuncs.com","http://2f02dbc7.m.daocloud.io", "https://docker.mirrors.ustc.edu.cn", "hub-mirror.c.163.com"],
   "max-concurrent-downloads": 10,
   "insecure-registries":["10.1.12.61:5000","10.1.11.60:5000"] 
 }
 EOF
+systemctl daemon-reload
+systemctl restart docker
 
 cat /etc/docker/daemon.json
+
 
 
 cp -rf docker.service /etc/systemd/system/docker.service

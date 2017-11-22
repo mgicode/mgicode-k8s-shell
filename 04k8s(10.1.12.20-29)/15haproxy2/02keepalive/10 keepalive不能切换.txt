@@ -1,0 +1,44 @@
+最近在研究服务器高可用集群 （HA）……
+
+搭建了主备两台Keepalived，配置什么的全是网上照抄的，被验证过无数遍的示例……
+
+然而Master和Backup无法自动切换。两边会同时绑定浮动IP（VIP），
+
+观察的到的现象是：
+
+1、Master正常启动。
+
+2、Backup启动刚开始是Backup状态，短暂间隔后变为Master。
+
+3、两台机器通过命令 ip addr 查看，均绑定了VIP！
+
+4、两台机器无论怎么重启，看起来互不相关。
+
+ 
+
+经过漫长的排查……重启……测试……
+
+发现……防火墙一关……两台机器状态切换立马丝般润滑。
+
+遂从防火墙配置作为突破口。
+
+究其原理，VRRP协议需要MASTER不断广播自己“状态正常”的信息，一旦Backup不能收到Master的广播信息，Backup会尝试切换到Master状态来接管VIP。
+
+所以如果防火墙配置不正确，Master的状态信息无法到达Backup，导致Backup以为Master挂了，出来抢占VIP。。
+
+然后这两机器就迷茫了……
+
+。
+
+最后找到Oracle Linux的一篇文档。。。。
+
+ 
+
+VRRP协议也需要设置防火墙！
+iptables -I INPUT -i ens160 -d 10.0.0.0/8 -p vrrp -j ACCEPT
+iptables -I OUTPUT -o ens160 -d 10.0.0.0/8 -p vrrp -j ACCEPT
+service iptables save
+ 
+
+收工……
+

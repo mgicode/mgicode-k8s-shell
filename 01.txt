@@ -1,0 +1,17 @@
+
+1、把mgicode-frame 变成几个小的jar
+
+2、gradle 改成 maven
+
+3、调通每个组件
+
+4、生成的改进 插件使用 mgicode 插件，基于该插件生成
+
+5、docker化,使用者直接下载docker即可
+
+6、k8s化
+
+7、vuejs化
+
+8、和前台串起来（reactjs)
+
