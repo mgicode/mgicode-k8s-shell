@@ -18,7 +18,6 @@ NODE_NAME="ms02 ms05 ms06  ms07   ms08   ms09  ms10   ms11  ms12  ms13  ms14  ms
     yum install traceroute -y  ;
     yum install mtr -y  ;
 
-    
 EOF
 
 for ip in $NODE_IPS ;do
