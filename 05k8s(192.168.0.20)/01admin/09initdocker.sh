@@ -31,7 +31,3 @@ for ip in $NODE_IPS ;do
       sleep 5
 done
 
-
-
-
-http://zhangwei:root@123@10.1.12.146/sirius/ts/server.git

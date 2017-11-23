@@ -2,12 +2,14 @@
 # email:546711211@qq.com
 # qq group:573283836
 
+#安装网络及常用工具
 yum install wget -y
 yum install -y telnet nmap curl tcping
 yum install unzip -y
 yum install traceroute -y
 yum install mtr -y
 
+#关掉防火墙
 systemctl stop firewalld.service
 systemctl disable firewalld.service
 

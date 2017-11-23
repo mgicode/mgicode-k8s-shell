@@ -26,6 +26,30 @@
 
 [Spring boot+docker 半自动化部署(三)、使用演示 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/03springboot-docker-demonate.md)
 
+[Spring boot+docker 半自动化部署(四)、网络设计 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/04springboot-docker-net-design.md)
+
+[Spring boot+docker 半自动化部署(五)、管理机的安装 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/05springboot-docker-admin-init.md)
+
+[Spring boot+docker 半自动化部署(六)、免密及初始化每一台机器](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/06springboot-docker-ssl-init.md)
+
+[Spring boot+docker 半自动化部署(七)、反向代理上网](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/07springboot-docker-autiproxy-net.md)
 
 
+[Spring boot+docker 半自动化部署(八)、mongodb的安装](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/08springboot-docker-mongodb.md)
 
+
+[Spring boot+docker 半自动化部署(九)、redis的安装](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/09springboot-docker-redis.md)
+
+
+[Spring boot+docker 半自动化部署(十)、consul的安装](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/10springboot-docker-consul.md)
+
+
+[Spring boot+docker 半自动化部署(十一)、consul-template的安装](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/11springboot-docker-consul-template.md)
+
+
+[Spring boot+docker 半自动化部署(十二)、测试连通程序的设计](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/12springboot-docker-echo-code.md)
+
+
+[Spring boot+docker 半自动化部署(十三)、一键发布的代码处理](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/13springboot-docker-auto.md)
+
+[Spring boot+docker 半自动化部署(十四)、consul和docker的问题](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/14springboot-docker-consul-question.md)
