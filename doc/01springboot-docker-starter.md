@@ -23,7 +23,7 @@
 
 [Spring boot+docker 半自动化部署 （一）、引言 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/01springboot-docker-starter.md)
 
-[Spring boot+docker 半自动化部署(二)、环境说明 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/01springboot-docker.md)
+[Spring boot+docker 半自动化部署(二)、环境说明 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/02springboot-docker-evn.md)
 
 [Spring boot+docker 半自动化部署(三)、使用演示 ](https://github.com/mgicode/mgicode-k8s-shell/blob/master/doc/03springboot-docker-demonate.md)
 
