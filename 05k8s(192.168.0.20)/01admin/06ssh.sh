@@ -9,9 +9,8 @@ NODE_IPS=$1
 NODE_NAME=$2
 
 #TEMPLATE_NODE_IP=10.1.12.251
-TEMPLATE_NODE_PWD="JiangXiHighway#1" 
+TEMPLATE_NODE_PWD="dddddd" 
 
-#password="JiangXiHighway#1"  
   
 i=0
 NAMES=(${NODE_NAME})

@@ -15,9 +15,9 @@ docker run -d    -v /etc/nginx:/etc/nginx  -v /usr/local/nginx/conf/:/usr/local/
 #docker exec -it nginx-proxy  /bin/bash
 
 # second step: add the conf
-scp 00proxy.conf root@202.121.178.167:/usr/local/nginx/conf/proxy.conf
+scp 00proxy.conf root@10.123.8.236:/usr/local/nginx/conf/proxy.conf
 
-scp 00proxy.conf root@202.121.178.167:/etc/nginx/nginx.conf
+scp 00proxy.conf root@10.123.8.236:/etc/nginx/nginx.conf
 
 # third step: restart
 docker restart nginx-proxy
