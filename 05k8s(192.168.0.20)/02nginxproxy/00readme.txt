@@ -5,9 +5,7 @@
 1、在192.168.0.20 建立nginx代理 
 
 
-
 2、每台机器加上http-proxy的指向
-
 
 
 3、yum 用不了，需要把yum源换成aliyun的http,同时把其中file协议换成http

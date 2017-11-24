@@ -17,6 +17,7 @@ baseurl=http://mirrors.aliyun.com/centos/$releasever/os/$basearch/
         http://mirrors.aliyuncs.com/centos/$releasever/os/$basearch/
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
 gpgcheck=1
+#gpgkey=file:///mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
  
 #released updates 
@@ -27,6 +28,7 @@ baseurl=http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/
         http://mirrors.aliyuncs.com/centos/$releasever/updates/$basearch/
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
 gpgcheck=1
+#gpgkey=file:///mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
  
 #additional packages that may be useful
@@ -37,6 +39,8 @@ baseurl=http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/
         http://mirrors.aliyuncs.com/centos/$releasever/extras/$basearch/
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras
 gpgcheck=1
+#
+#gpgkey=file:///mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
  
 #additional packages that extend functionality of existing packages
@@ -48,6 +52,7 @@ baseurl=http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus
 gpgcheck=1
 enabled=0
+#gpgkey=file:///mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
  
 #contrib - packages by Centos Users

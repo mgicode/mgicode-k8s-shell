@@ -31,13 +31,15 @@ for ip in $NODE_IPS ;do
       echo "初始化$ip proxy..."
        Script=" 
           echo \" export http_proxy=http://192.168.0.20:85 \" >> /etc/profile
-          echo \" export https_proxy=https://192.168.0.20:443 \" >> /etc/profile         
+          #echo \" export https_proxy=https://192.168.0.20:443 \" >> /etc/profile 
           source /etc/profile
           curl www.google.cn
         "
       ssh root@$ip "$Script"
       sleep 5
 done
+
+
 
 
 #  echo  " export http_proxy=http://192.168.0.20:85 " >> /etc/profile
