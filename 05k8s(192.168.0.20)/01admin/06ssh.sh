@@ -23,7 +23,7 @@ for ip in $NODE_IPS ;do
  
     NAME=${NAMES[$i]}
     echo "name:$NAME,ip:$ip  "
-     #检测是否开机
+     #1、检测是否开机
     for  index1 in {1..255} ; do
        ping -c 1 -w 1 $ip &>/dev/null
        if [ $? -eq 0 ]; then
@@ -36,7 +36,7 @@ for ip in $NODE_IPS ;do
     done
    echo "sleep: 10"
    sleep 10
-   # 进行ssh免证登录,如果在本机中已经有117的记录
+   # 2、进行ssh免证登录,ssh-copy-id到需要免登录的机器上
    expect -c " 
     set timeout 5    
     spawn ssh-copy-id -i /root/.ssh/id_rsa.pub root@$ip
@@ -54,43 +54,45 @@ for ip in $NODE_IPS ;do
    #该时间需要足够长，不然spawn执行的命令的伪线程还没有关闭，那么第二次就会connect refused!
    echo "sleep: 10"
    sleep 10 
-   #执行相关操作，这里主要改名，改ip并重启  
+
+   #3、对每台机器进行初始化操作。其操作在/common/init.sh中定义
+   # 执行相关操作，这里主要改名，改ip并重启  
    scp /common/init.sh root@$ip:/root/init.sh
    #ssh -t -p $port $user@$ip "remote_cmd"  
    ssh root@$ip "chmod 777 /root/init.sh; cd /root/; ./init.sh; "
    let i++
       
-    #检测是否$ip是否开机
-    for  index1 in {1..20} ; do
-       ping -c 1 -w 1 $ip &>/dev/null
-       if [ $? -eq 0 ]; then
-        echo "sleep: 40"
-        sleep 40
-        echo "$ip $NAME重启完成... "
-           #初始化$IP认证提示
-           expect -c "  
-            set timeout 5   
-            spawn ssh root@$ip ""
-            expect {  
-              "*yes/no" { send "yes\\r"; exp_continue}     
-              "*assword:" { send "${TEMPLATE_NODE_PWD}\\r" } 
-              "*ERROR:" { exp_continue }
-              "*inet" { exp_continue }
-             }  
-            expect eof     
-            exit 
-            #expect进程要退出，不然在循环中再次运行报错
-          "  
-        #该时间需要足够长，不然spawn执行的命令的伪线程还没有关闭，那么第二次就会connect refused!
-        echo "sleep: 20"
-        
-        sleep 20
-        break;
-       else  
-        echo "$ip正在重启中... "
-        sleep 15;
-      fi
-    done
+    #4 检测是否$ip是否开机
+  for  index1 in {1..20} ; do
+      ping -c 1 -w 1 $ip &>/dev/null
+      if [ $? -eq 0 ]; then
+      echo "sleep: 40"
+      sleep 40
+      echo "$ip $NAME重启完成... "
+          #初始化$IP认证提示
+          expect -c "  
+          set timeout 5   
+          spawn ssh root@$ip ""
+          expect {  
+            "*yes/no" { send "yes\\r"; exp_continue}     
+            "*assword:" { send "${TEMPLATE_NODE_PWD}\\r" } 
+            "*ERROR:" { exp_continue }
+            "*inet" { exp_continue }
+            }  
+          expect eof     
+          exit 
+          #expect进程要退出，不然在循环中再次运行报错
+        "  
+      #该时间需要足够长，不然spawn执行的命令的伪线程还没有关闭，那么第二次就会connect refused!
+      echo "sleep: 20"
+      
+      sleep 20
+      break;
+      else  
+      echo "$ip正在重启中... "
+      sleep 15;
+    fi
+  done
    
 done
 
